@@ -1,14 +1,16 @@
 package com.shadowcard.demo.entities;
 
+import java.util.List;
 import jakarta.persistence.*;
 
-@Entity(name = "cartas")
+@Entity
+@Table(name = "cartas") // Nome da tabela em plural
 public class CartaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @Column(name = "nome")
     private String nome;
 
@@ -21,12 +23,18 @@ public class CartaEntity {
     @Column(name = "defesa")
     private int defesa;
 
-    @Column(name = "tipo")
-    private String tipo;
-
     @Column(name = "localImagem")
     private String localImagem;
 
+    @ManyToMany
+    @JoinTable(
+        name = "deck_cartas", 
+        joinColumns = @JoinColumn(name = "id_cartas"), 
+        inverseJoinColumns = @JoinColumn(name = "id_decks")
+    )
+    private List<DeckEntity> decks; // Renomear para decks no plural
+
+    // Getters e Setters
     public long getId() {
         return id;
     }
@@ -67,14 +75,6 @@ public class CartaEntity {
         this.defesa = defesa;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public String getLocalImagem() {
         return localImagem;
     }
@@ -83,6 +83,11 @@ public class CartaEntity {
         this.localImagem = localImagem;
     }
 
-    
-    
+    public List<DeckEntity> getDecks() {
+        return decks;
+    }
+
+    public void setDecks(List<DeckEntity> decks) {
+        this.decks = decks;
+    }
 }

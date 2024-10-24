@@ -1,36 +1,43 @@
-package com.shadowcard.demo.dtos.res;
+package com.shadowcard.demo.dtos.req;
 
-public class ShowUsuarioDTO {
+import java.util.List;
 
-    private Long id;
+public class UsuarioRequest {
     private String nome;
     private String email;
     private String senha;
+    private List<Long> decks; // Lista de IDs dos decks
 
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Getters e Setters
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getSenha() {
         return senha;
     }
+
     public void setSenha(String senha) {
         this.senha = senha;
     }
- 
+
+    public List<Long> getDecks() {
+        return decks;
+    }
+
+    public void setDecks(List<Long> decks) {
+        this.decks = decks;
+    }
 }

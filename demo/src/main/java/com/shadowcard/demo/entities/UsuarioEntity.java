@@ -1,9 +1,11 @@
 
 package com.shadowcard.demo.entities;
 
+import java.util.List;
 import jakarta.persistence.*;
 
-@Entity(name = "usuarios")
+@Entity
+@Table(name = "usuarios") // Nome da tabela em plural
 public class UsuarioEntity {
 
     @Id
@@ -19,6 +21,15 @@ public class UsuarioEntity {
     @Column(name = "senha")
     private String senha;
 
+    @ManyToMany
+    @JoinTable(
+        name = "deck_usuarios", 
+        joinColumns = @JoinColumn(name = "id_usuarios"), 
+        inverseJoinColumns = @JoinColumn(name = "id_decks")
+    )
+    private List<DeckEntity> decks; // Renomear para decks no plural
+
+    // Getters e Setters
     public long getId() {
         return id;
     }
@@ -51,5 +62,11 @@ public class UsuarioEntity {
         this.senha = senha;
     }
 
+    public List<DeckEntity> getDecks() {
+        return decks;
+    }
 
+    public void setDecks(List<DeckEntity> decks) {
+        this.decks = decks;
+    }
 }
