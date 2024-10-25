@@ -1,50 +1,52 @@
 
-create table "usuarios" (
-	"id" serial primary key,
-	"nome" text not null,
-	"email" text not null,
-	"senha" text not null
+	create table "usuarios" (
+		"id" serial primary key,
+		"nome" text not null,
+		"email" text not null,
+		"senha" text not NULL,
+		"dinheiro" int not null
+		
+	);
 	
-);
-
-select * from usuarios;
-drop table usuarios;
-
-create table "cartas" (
-	"id" serial primary key,
-	"nome" text not null,
-	"numero" int not null,
-	"ataque" int not null,
-	"defesa" int not null,
-	"localImagem" text not null,
+	select * from usuarios;
+	drop table usuarios;
 	
-);
-
-select * from cartas;
-drop table cartas;
-
-create table "decks" (
-	"id" serial primary key,
-	"tipo" text not null,
+	create table "cartas" (
+		"id" serial primary key,
+		"nome" text not null,
+		"numero" int not null,
+		"ataque" int not null,
+		"defesa" int not null,
+		"local_imagem" text not null	
+	);
 	
-);
+	select * from cartas;
+	drop table cartas;
 
-
-
-crate table "deck_cartas" (
-	"id" serial primary key,
 	
-	"id_decks" integer references deck(id),
-	"id_cartas" integer references cartas(id)
+	create table "decks" (
+		"id" serial primary key,
+		"tipo" text not null
+	);
 	
-);
-
-create table "deck_usuarios" (
-	"id" serial primary key,
+	select * from decks;
+	drop table decks;
 	
-	"id_decks" integer references deck(id),
-	"id_usuarios" integer references usuarios(id)
-)
+	create table "deck_cartas" (
+		"id" serial primary key,
+		"id_decks" integer references decks(id),
+		"id_cartas" integer references cartas(id)
+		
+	);
 
-select * from DeckEsqueleto;
-drop table DeckEsqueleto;
+	drop table deck_cartas;
+	
+	create table "deck_usuarios" (
+		"id" serial primary key,
+		
+		"id_decks" integer references decks(id),
+		"id_usuarios" integer references usuarios(id)
+	);
+
+	drop table deck_usuarios;
+	

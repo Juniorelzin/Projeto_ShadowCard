@@ -21,6 +21,9 @@ public class UsuarioEntity {
     @Column(name = "senha")
     private String senha;
 
+    @Column(name = "dinheiro")
+    private int dinheiro;
+
     @ManyToMany
     @JoinTable(
         name = "deck_usuarios", 
@@ -61,6 +64,14 @@ public class UsuarioEntity {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    public int getDinheiro() {
+        return dinheiro;
+    }
+
+    public void setDinheiro(int dinheiro) {
+        this.dinheiro = dinheiro;
+    }
 
     public List<DeckEntity> getDecks() {
         return decks;
@@ -69,4 +80,6 @@ public class UsuarioEntity {
     public void setDecks(List<DeckEntity> decks) {
         this.decks = decks;
     }
+
+    
 }

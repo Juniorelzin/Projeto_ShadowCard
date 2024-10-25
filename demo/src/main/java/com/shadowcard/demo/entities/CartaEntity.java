@@ -23,7 +23,7 @@ public class CartaEntity {
     @Column(name = "defesa")
     private int defesa;
 
-    @Column(name = "localImagem")
+    @Column(name = "local_imagem")
     private String localImagem;
 
     @ManyToMany

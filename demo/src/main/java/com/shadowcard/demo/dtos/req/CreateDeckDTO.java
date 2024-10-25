@@ -2,7 +2,7 @@ package com.shadowcard.demo.dtos.req;
 
 import java.util.List;
 
-public class DeckRequest {
+public class CreateDeckDTO {
     private String tipo;
     private List<Long> cartas; // Lista de IDs das cartas
     private List<Long> usuarios; // Lista de IDs dos usuários

@@ -1,7 +1,6 @@
-package com.shadowcard.demo.dtos.res;
+package com.shadowcard.demo.dtos.req;
 
-public class CartaResponse {
-    private long id;
+public class CreateCartaDTO {
     private String nome;
     private int numero;
     private int ataque;
@@ -9,14 +8,6 @@ public class CartaResponse {
     private String localImagem;
 
     // Getters e Setters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -57,6 +48,3 @@ public class CartaResponse {
         this.localImagem = localImagem;
     }
 }
-
-
-

@@ -3,7 +3,7 @@ package com.shadowcard.demo.dtos.res;
 
 import java.util.List;
 
-public class DeckResponse {
+public class ShowDeckDTO {
     private long id;
     private String tipo;
     private List<Long> cartas; // Lista de IDs das cartas
