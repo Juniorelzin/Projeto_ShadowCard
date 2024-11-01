@@ -17,7 +17,8 @@ CREATE TABLE "usuarios" (
 	
 	CREATE TABLE "decks" (
 	    "id" SERIAL PRIMARY KEY,
-	    "tipo" TEXT NOT NULL
+	    "tipo" TEXT NOT NULL,
+		"preco" INTEGER NOT NULL
 	);
 	
 	CREATE TABLE "deck_cartas" (
@@ -48,11 +49,15 @@ CREATE TABLE "usuarios" (
 	('Carta I', 4, 1700, 1600, 'caminho/para/imagemI.png'),
 	('Carta J', 5, 2000, 1800, 'caminho/para/imagemJ.png');
 
-	INSERT INTO decks (tipo) VALUES
-	('Deck de Ataque'),
-	('Deck de Defesa'),
-	('Deck Equilibrado'),
-	('Deck de Controle');
+	INSERT INTO decks (tipo, preco) VALUES
+	('Deck de Monstro', 50),
+	('Deck de Ataque', 10),
+	('Deck de Defesa', 20),
+	('Deck Equilibrado', 20),
+	('Deck de Controle', 10),
+	('Deck de Guerreiro', 10),
+	('Deck de Esqueleto', 20),
+	('Deck Dragão', 30);
 
 	-- Insira associações entre cartas e decks
 	INSERT INTO deck_cartas (id_decks, id_cartas) VALUES
@@ -82,3 +87,4 @@ CREATE TABLE "usuarios" (
 	DROP TABLE IF EXISTS decks;
 	DROP TABLE IF EXISTS cartas;
 	DROP TABLE IF EXISTS usuarios;
+	
