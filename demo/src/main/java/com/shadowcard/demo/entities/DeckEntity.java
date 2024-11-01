@@ -14,6 +14,9 @@ public class DeckEntity {
     @Column(name = "tipo")
     private String tipo;
 
+    @Column(name = "preco")
+    private Integer preco;
+
     @ManyToMany
     @JoinTable(
         name = "deck_cartas", 
@@ -33,6 +36,14 @@ public class DeckEntity {
     // Getters e Setters
     public long getId() {
         return id;
+    }
+
+    public Integer getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Integer preco) {
+        this.preco = preco;
     }
 
     public void setId(long id) {

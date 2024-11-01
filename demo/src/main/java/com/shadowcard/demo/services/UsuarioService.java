@@ -1,6 +1,7 @@
 package com.shadowcard.demo.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,6 @@ import com.shadowcard.demo.entities.UsuarioEntity;
 import com.shadowcard.demo.repositories.UsuarioRepository;
 import com.shadowcard.demo.repositories.DeckRepository;
 
-
-
 @Service
 public class UsuarioService {
 
@@ -26,27 +25,22 @@ public class UsuarioService {
     @Autowired
     private DeckRepository deckRepository;
 
-
-    
     public void createUsuario(CreateUsuarioDTO dto) {
 
-      
         UsuarioEntity usuarioEntity = new UsuarioEntity();
         usuarioEntity.setNome(dto.getNome());
         usuarioEntity.setEmail(dto.getEmail());
         usuarioEntity.setSenha(dto.getSenha());
         usuarioEntity = usuarioRepository.save(usuarioEntity);
-    
-    }
 
+    }
 
     public List<ShowUsuarioDTO> getUsuarios() {
         List<UsuarioEntity> usuarioEntity = usuarioRepository.findAll();
 
         return usuarioEntity.stream().map(usuario -> {
             ShowUsuarioDTO usuarioDTO = new ShowUsuarioDTO();
-                
-            
+
             usuarioDTO.setId(usuario.getId());
             usuarioDTO.setNome(usuario.getNome());
             usuarioDTO.setEmail(usuario.getEmail());
@@ -57,35 +51,49 @@ public class UsuarioService {
         }).toList();
     }
 
-
     public void addDecksToUsuario(CreateAddDeckUsuario dto) {
-    UsuarioEntity usuario = usuarioRepository.findById(dto.getUsuarioId())
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        UsuarioEntity usuario = usuarioRepository.findById(dto.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-    List<DeckEntity> decks = deckRepository.findAllById(dto.getDeckIds());
-    
-    usuario.getDecks().addAll(decks);
-    usuarioRepository.save(usuario);
-        }
+        List<DeckEntity> decks = deckRepository.findAllById(dto.getDeckIds());
 
+        usuario.getDecks().addAll(decks);
+        usuarioRepository.save(usuario);
+    }
 
     public void buyDecksUsuario(CreateAddDeckUsuario dto) {
-            UsuarioEntity usuario = usuarioRepository.findById(dto.getUsuarioId())
+        UsuarioEntity usuario = usuarioRepository.findById(dto.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-            
-            List<DeckEntity> decks = deckRepository.findAllById(dto.getDeckIds());
-            
-            int totalCusto = 10;
-    
-            if (usuario.getDinheiro() < totalCusto) {
-                throw new RuntimeException("Dinheiro insuficiente para comprar os decks.");
-            }
 
-            usuario.getDecks().addAll(decks);
-        
-            usuario.setDinheiro(usuario.getDinheiro() - totalCusto);
-        
-            usuarioRepository.save(usuario);
+        List<DeckEntity> decks = deckRepository.findAllById(dto.getDeckIds());
+
+        // Calcular o custo total dos decks
+        int totalCusto = decks.stream()
+        .mapToInt(DeckEntity::getPreco)
+        .sum();
+
+        // Verificar se o usuário tem dinheiro suficiente
+        if (usuario.getDinheiro() < totalCusto) {
+            throw new RuntimeException("Dinheiro insuficiente para comprar os decks.");
+        }
+
+        // Filtrar decks que o usuário já possui
+        List<DeckEntity> decksParaAdicionar = decks.stream()
+                .filter(deck -> !usuario.getDecks().contains(deck))
+                .collect(Collectors.toList());
+
+        // Verificar se há decks duplicados
+        if (decksParaAdicionar.isEmpty()) {
+            throw new RuntimeException("Você já possui todos os decks selecionados.");
+        }
+
+        // Adicionar os decks ao usuário
+        usuario.getDecks().addAll(decksParaAdicionar);
+
+        // Diminuir o dinheiro do usuário
+        usuario.setDinheiro(usuario.getDinheiro() - totalCusto);
+
+        usuarioRepository.save(usuario);
     }
-        
+
 }
