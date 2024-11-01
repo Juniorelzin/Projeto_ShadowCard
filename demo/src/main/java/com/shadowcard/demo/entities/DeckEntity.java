@@ -9,7 +9,7 @@ public class DeckEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "tipo")
     private String tipo;

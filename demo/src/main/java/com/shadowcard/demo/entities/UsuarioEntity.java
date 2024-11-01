@@ -10,7 +10,7 @@ public class UsuarioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "nome")
     private String nome;
@@ -22,7 +22,7 @@ public class UsuarioEntity {
     private String senha;
 
     @Column(name = "dinheiro")
-    private int dinheiro;
+    private Integer dinheiro = 100;
 
     @ManyToMany
     @JoinTable(

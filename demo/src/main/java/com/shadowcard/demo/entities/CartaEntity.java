@@ -9,19 +9,19 @@ public class CartaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "nome")
     private String nome;
 
     @Column(name = "numero")
-    private int numero;
+    private Integer numero;
 
     @Column(name = "ataque")
-    private int ataque;
+    private Integer ataque;
 
     @Column(name = "defesa")
-    private int defesa;
+    private Integer defesa;
 
     @Column(name = "local_imagem")
     private String localImagem;
